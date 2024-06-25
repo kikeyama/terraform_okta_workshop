@@ -16,7 +16,7 @@ resource "aws_instance" "windows" {
     aws_security_group.private_base_sg.id,
     aws_security_group.public_windows_sg.id,
   ]
-  subnet_id              = aws_subnet.public_subnet[data.aws_availability_zones.available.names[random_integer.az_index_windows_ad.result]].id
+  subnet_id              = aws_subnet.public_subnet[data.aws_availability_zones.available.names[random_integer.az_index_windows.result]].id
 
   root_block_device {
     # For reference: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html

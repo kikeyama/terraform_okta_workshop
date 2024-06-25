@@ -2,17 +2,6 @@
 # Keypair
 # ----------------------------------------------------------------
 
-variable "key_name" {
-  type        = string
-  description = "keypair name"
-}
-
-variable "key_file_path" {
-  type        = string
-  description = "path of key files"
-  default     = "."
-}
-
 locals {
   public_key_file  = "${var.key_file_path}/${var.key_name}.id_rsa.pub"
   private_key_file = "${var.key_file_path}/${var.key_name}.id_rsa.pem"
