@@ -26,4 +26,3 @@ home_cidr     = "123.45.6.78/32"  # whatismyip.comで確認
 ## リソースを破棄
 
 `terraform destroy -var-file=<2.で編集したtfvarsファイル名>`
-	
