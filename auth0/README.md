@@ -9,19 +9,19 @@ Auth0の以下のリソースを作成
 
 ## リソースを展開
 
-1. Auth0管理コンソールでM2Mアプリケーションを作成し `Domain` `Client ID` `Client Secret` を控えておく
+### 1. Auth0管理コンソールでM2Mアプリケーションを作成し `Domain` `Client ID` `Client Secret` を控えておく
 
 | **API** | **Scope** |
 | --- | --- |
 | `Auth0 Management API` | `read:user` `update:user` `delete:user` `create:user` `read:action` `update:action` `delete:action` `create:action` `read:connection` `update:connection` `delete:connection` `create:connection` |
 
-2. テナント用のterraform設定をテンプレートからコピー
+### 2. テナント用のterraform設定をテンプレートからコピー
 
 ```bash
 cp -p -r tenant/template tenant/<Auth0テナント名>
 ```
 
-3. 変数ファイルを編集
+### 3. 変数ファイルを編集
 
 ```bash
 cd tenant/<Auth0テナント名>
@@ -90,13 +90,16 @@ line_client_secret = "********************************"
 
 <summary>Yahoo! Japanデベロッパーコンソール</summary>
 
-サーバーサイドアプリケーションを指定  
+#### サーバーサイドアプリケーションを指定
+
 ![アプリケーション作成](../images/yahoo_japan_application.png)
 
-コールバックURLには `https://AUTH0_DOMAIN/login/callback` を設定  
+#### コールバックURLには `https://AUTH0_DOMAIN/login/callback` を設定
+
 ![コールバックURL設定](../images/yahoo_japan_callback.png)
 
-クライアントIDとシークレットを `.tfvars` に設定  
+#### クライアントIDとシークレットを `.tfvars` に設定
+
 ![アプリケーション設定確認](../images/yahoo_japan_settings.png)
 
 </details>
@@ -105,25 +108,28 @@ line_client_secret = "********************************"
 
 <summary>LINEデベロッパーコンソール</summary>
 
-LINE LoginのChannel作成  
+#### LINE LoginのChannel作成
+
 ![Channel作成](../images/line_create_channel.png)
 
-コールバックURLには `https://AUTH0_DOMAIN/login/callback` を設定  
+#### コールバックURLには `https://AUTH0_DOMAIN/login/callback` を設定
+
 ![コールバックURL設定](../images/line_callback.png)
 
-Channel IDとシークレットを `.tfvars` に設定  
+#### Channel IDとシークレットを `.tfvars` に設定
+
 ![Channel設定確認](../images/line_settings_channel_id.png)  
 ![Channel設定確認](../images/line_settings_channel_secret.png)
 
 </details>
 
-4. Auth0 Providerをインストール
+### 4. Auth0 Providerをインストール
 
 ```bash
 terraform init
 ```
 
-5. リソースをデプロイ
+### 5. リソースをデプロイ
 
 ```bash
 terraform apply -var-file=<Auth0テナント名>.tfvars
