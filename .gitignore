@@ -7,4 +7,3 @@
 *.pub
 !example.tfvars
 .DS_Store
-keys/
