@@ -15,7 +15,7 @@ TerraformでAWSのリソースを管理するためのデモワークショッ�
 
 ### トポロジー
 
-![VPCトポロジー](../images/aws_topology.png)
+![VPCトポロジー](../images/aws_vpc_topology.png)
 
 # 使い方
 
