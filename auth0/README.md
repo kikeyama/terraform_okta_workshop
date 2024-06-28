@@ -1,9 +1,14 @@
 # 概要
 
-Auth0の以下のリソースを作成
-- ユーザー
-- コネクション（LINE, Yahoo Japan）
-- Action（`user_metadata` に基づいてMFA要否を判別）
+TerraformでAuth0のリソースを管理するためのデモワークショップ
+
+## 作成される主なリソース
+
+| リソース | 説明 | モジュール |
+| --- | --- | --- |
+| ユーザー | Auth0ユーザーを複数作成（Attributeや人数は変数で指定） | [auth0_user.tf](modules/common/auth0_user.tf) |
+| コネクション | LINE, Yahoo!Japan (Custom) を作成 | [auth0_connection.tf](modules/common/auth0_connection.tf) |
+| Actions | `user_metadata` に基づいてMFA要否を判定するPost Login処理 | [auth0_actions.tf](modules/common/auth0_actions.tf) |
 
 # 使い方
 
@@ -28,6 +33,8 @@ cd tenant/<Auth0テナント名>
 cp -p example.tfvars <Auth0テナント名>.tfvars
 vim <Auth0テナント名>.tfvars
 ```
+
+#### <Auth0テナント名>.tfvars
 
 ```hcl
 # Auth0 Provider Settings

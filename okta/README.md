@@ -11,7 +11,6 @@ TerraformでOktaのリソースを管理するためのデモワークショッ�
 | アプリケーション | 変数 `app_count` で指定した数のOAuth Appを作成 | [okta_app.tf](modules/okta_app.tf) |
 | 認証ポリシー | 認証ポリシーおよび `Contractor` グループ用のルールを作成してアプリケーションをアサイン | [okta_app_signon_policy.tf](modules/okta_app_signon_policy.tf) |
 
-
 ### 作成されるグループとアサイン
 
 | グループ名 | メンバーアサイン |
@@ -19,7 +18,6 @@ TerraformでOktaのリソースを管理するためのデモワークショッ�
 | `Demo Terraform` | 全員を直接アサイン |
 | `Sales` | グループルール `Sales members` - Departmentが `Sales` のメンバーをアサイン |
 | `Contractor` | グループルール `Contractors` - User typeが `Contractor` のメンバーをアサイン |
-
 
 # 使い方
 
@@ -74,6 +72,8 @@ cd org/<Okta org名>
 cp -p example.tfvars <Okta org名>.tfvars
 vim <Okta org名>.tfvars
 ```
+
+#### <Okta org名>.tfvars
 
 ```hcl
 # Okta Provider Settings
