@@ -13,6 +13,10 @@ TerraformでAWSのリソースを管理するためのデモワークショッ�
 | Keypair | Windows, LinuxそれぞれのPublic key / Private keyを作成 | [keypair.tf](keypair.tf) |
 | EC2 | WindowsおよびNode.js用Linuxインスタンス | [ec2_windows.tf](ec2_windows.tf), [ec2_nodejs.tf](ec2_nodejs.tf) |
 
+### トポロジー
+
+![VPCトポロジー](../images/aws_topology.png)
+
 # 使い方
 
 ## リソースを展開
