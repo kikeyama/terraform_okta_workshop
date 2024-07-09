@@ -19,57 +19,90 @@ TerraformでOktaのリソースを管理するためのデモワークショッ�
 | `Sales` | グループルール `Sales members` - Departmentが `Sales` のメンバーをアサイン |
 | `Contractor` | グループルール `Contractors` - User typeが `Contractor` のメンバーをアサイン |
 
+## フォルダ/ファイル構成
+
+| フォルダ | 概要 |
+| --- | --- |
+| [modules](./modules) | モジュール（ユーザー作成等の共通処理）を格納 |
+| [org](./org) | Okta orgごとのフォルダを格納 |
+| [org/template](./org/template) | orgフォルダのコピー元テンプレート |
+
+```
+okta
+├── README.md
+├── modules
+│   └── <各種構成ファイル>.tf
+└── org
+    ├── <Okta org名（各自templateからコピーして作成）>
+    │   ├── example.tfvars
+    │   ├── <Oka org名>.tfvars
+    │   ├── keys
+    │   │   └── <API service appの秘密鍵>
+    │   ├── main.tf
+    │   └── variables.tf
+    └── template
+        ├── example.tfvars
+        ├── keys
+        ├── main.tf
+        └── variables.tf
+```
+
 # 使い方
 
 ## 事前準備
 
-### 1. Org用のterraform設定をテンプレートからコピー
+### 1. Okta管理コンソールでアプリケーションを作成
+
+#### 1-1. API Serviceアプリケーションを作成
+
+![API Serviceアプリケーション](../images/okta_create_api_service_app.png)
+
+#### 1-2. クライアント認証方式を Public key / Private key にする
+
+![Public key / Private key](../images/okta_api_service_app_settings_1.png)
+
+#### 1-3. 鍵を作成
+
+![Add keyをクリックして鍵を作成](../images/okta_api_service_app_settings_2.png)
+
+#### 1-4. Private key (PEM) をコピーして `./org/<Okta org名>/keys` フォルダに保存
+
+![Private key (PEM)をコピーして保存](../images/okta_api_service_app_settings_3.png)
+
+#### 1-5. Client IDとKID (Key ID)を控える（後のステップで変数に設定）
+
+![Client IDとKIDを控える](../images/okta_api_service_app_settings_4.png)
+
+#### 1-6. General Settings欄にある `Proof of possession` のチェックを外す
+
+![Proof of possessionのチェックを外す](../images/okta_api_service_app_settings_5.png)
+
+#### 1-7. Okta API Scopesタブで必要なスコープを設定
+
+![スコープを設定](../images/okta_api_service_app_settings_6.png)
+
+#### 1-8. Admin roleタブで `Super Administrator` を追加
+
+![Admin role (Super Amin)を追加](../images/okta_api_service_app_settings_7.png)
+
+### 2. Org用のterraform設定をテンプレートからコピー
 
 ```bash
 cp -p -r org/template org/<Okta org名>
 ```
-
-### 2. Okta管理コンソールでアプリケーションを作成
-
-#### 2-1. API Serviceアプリケーションを作成
-
-![API Serviceアプリケーション](../images/okta_create_api_service_app.png)
-
-#### 2-2. クライアント認証方式を Public key / Private key にする
-
-![Public key / Private key](../images/okta_api_service_app_settings_1.png)
-
-#### 2-3. 鍵を作成
-
-![Add keyをクリックして鍵を作成](../images/okta_api_service_app_settings_2.png)
-
-#### 2-4. Private key (PEM) をコピーして `./org/<Okta org名>/keys` フォルダに保存
-
-![Private key (PEM)をコピーして保存](../images/okta_api_service_app_settings_3.png)
-
-#### 2-5. Client IDとKID (Key ID)を控える（後のステップで変数に設定）
-
-![Client IDとKIDを控える](../images/okta_api_service_app_settings_4.png)
-
-#### 2-6. General Settings欄にある `Proof of possession` のチェックを外す
-
-![Proof of possessionのチェックを外す](../images/okta_api_service_app_settings_5.png)
-
-#### 2-7. Okta API Scopesタブで必要なスコープを設定
-
-![スコープを設定](../images/okta_api_service_app_settings_6.png)
-
-#### 2-8. Admin roleタブで `Super Administrator` を追加
-
-![Admin role (Super Amin)を追加](../images/okta_api_service_app_settings_7.png)
 
 ## リソースを展開
 
 ### 3. 変数ファイルを編集
 
 ```bash
+# org用のディレクトリに移動
 cd org/<Okta org名>
+
+# org用の変数ファイルをテンプレートからコピー
 cp -p example.tfvars <Okta org名>.tfvars
+
+# 変数ファイルを編集
 vim <Okta org名>.tfvars
 ```
 

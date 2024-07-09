@@ -10,15 +10,59 @@ TerraformでAuth0のリソースを管理するためのデモワークショッ
 | コネクション | LINE, Yahoo!Japan (Custom) を作成 | [auth0_connection.tf](modules/common/auth0_connection.tf) |
 | Actions | `user_metadata` に基づいてMFA要否を判定するPost Login処理 | [auth0_actions.tf](modules/common/auth0_actions.tf) |
 
+## フォルダ/ファイル構成
+
+| フォルダ | 概要 |
+| --- | --- |
+| [modules](./modules) | モジュール（ユーザー作成等の共通処理）を格納 |
+| [actions](./actions) | Actionsスクリプトを格納 |
+| [connections](./connections) | 各Connectionでユーザープロファイルを取得する等のスクリプト |
+| [tenant](./tenant) | Auth0テナントごとのフォルダを格納 |
+| [tenant/template](./tenant/template) | テナントフォルダのコピー元テンプレート |
+
+```
+auth0
+├── README.md
+├── actions
+│   └── <Actionsスクリプト>.js
+├── connections
+│   └── <Connectionで用いるスクリプト>.js
+├── modules
+│   └── common
+│       └── <各種構成ファイル>.tf
+└── tenant
+    ├── <Auth0テナント名（各自templateからコピーして作成）>
+    │   ├── example.tfvars
+    │   ├── <Auth0テナント名>.tfvars
+    │   ├── main.tf
+    │   └── variables.tf
+    └── template
+        ├── example.tfvars
+        ├── main.tf
+        └── variables.tf
+```
+
+
 # 使い方
 
-## リソースを展開
+## 事前準備
 
-### 1. Auth0管理コンソールでM2Mアプリケーションを作成し `Domain` `Client ID` `Client Secret` を控えておく
+### 1. Auth0管理コンソールでM2Mアプリケーションを作成
+
+#### 1-1. Machine to Machineアプリケーションを作成
+
+![M2Mアプリケーションを作成](../images/auth0_create_m2m_app.png)
+
+#### 1-2. 使用するAPIとスコープを指定
 
 | **API** | **Scope** |
 | --- | --- |
 | `Auth0 Management API` | `read:user` `update:user` `delete:user` `create:user` `read:action` `update:action` `delete:action` `create:action` `read:connection` `update:connection` `delete:connection` `create:connection` |
+
+#### 1-3. 生成される `Domain` `Client ID` `Client Secret` を控えておく
+
+![Domain, Client ID, Client Secret をコピー](../images/auth0_m2m_app_settings.png)
+
 
 ### 2. テナント用のterraform設定をテンプレートからコピー
 
@@ -26,11 +70,18 @@ TerraformでAuth0のリソースを管理するためのデモワークショッ
 cp -p -r tenant/template tenant/<Auth0テナント名>
 ```
 
+## リソースを展開
+
 ### 3. 変数ファイルを編集
 
 ```bash
+# テナント用のディレクトリに移動
 cd tenant/<Auth0テナント名>
+
+# テナント用の変数ファイルをテンプレートからコピー
 cp -p example.tfvars <Auth0テナント名>.tfvars
+
+# 変数ファイルを編集
 vim <Auth0テナント名>.tfvars
 ```
 

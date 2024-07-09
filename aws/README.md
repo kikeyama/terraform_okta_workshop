@@ -19,9 +19,38 @@ TerraformでAWSのリソースを管理するためのデモワークショッ�
 
 # 使い方
 
+## 事前準備
+
+### 1. AWSコンソールでユーザー作成
+
+#### 1-1. IAM Userを作成（コンソールへのログインは不要）
+
+![IAM Userを作成](../images/aws_iam_user_1.png)
+
+#### 1-2. 権限に `AmazonEC2FullAccess` と `AmazonVPCFullAccess` ポリシーを設定
+
+![AmazonEC2FullAccessポリシーを設定](../images/aws_iam_user_2.png)  
+![AmazonVPCFullAccessポリシーを設定](../images/aws_iam_user_3.png)
+
+#### 1-3. 設定を確認（必要に応じてタグを追加）
+
+![設定を確認](../images/aws_iam_user_4.png)
+
+#### 1-4. Access KeyとSecret Keyを作成
+
+![Access KeyとSecret Keyを作成](../images/aws_iam_user_5.png)
+
+#### 1-5. ユースケースは `Thrid-party service` を選択
+
+![`Thrid-party service`　を選択](../images/aws_iam_user_6.png)
+
+#### 1-6. 生成されたAccess KeyとSecret Keyを控えておく（Secret Keyは2度と表示されないので要注意）
+
+![Access KeyとSecret Keyをコピー](../images/aws_iam_user_7.png)
+
 ## リソースを展開
 
-### 1. 各Providerをインストール
+### 1. Providerをインストール
 
 ```bash
 terraform init
